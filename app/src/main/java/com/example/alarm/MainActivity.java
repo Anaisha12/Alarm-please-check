@@ -11,7 +11,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alarm.databinding.ActivityMainBinding;
@@ -22,21 +25,28 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
+    //private ActivityMainBinding binding;
     private MaterialTimePicker picker;
     private Calendar calendar;
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
+    Button selectTimebtn,setAlarmbtn,cancelAlarmBtn;
+    TextView selectedTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        selectTimebtn=findViewById(R.id.selectTimebt);
+        setAlarmbtn=findViewById(R.id.setAlarmbt);
+        cancelAlarmBtn=findViewById(R.id.cancelAlarmBt);
+        selectedTime=findViewById(R.id.selectedTim);
+        //binding = ActivityMainBinding.inflate(getLayoutInflater());
 
-       setContentView(binding.getRoot());
+       //setContentView(binding.getRoot());
         createNotificationChannel();
 
-        binding.selectTimebtn.setOnClickListener(new View.OnClickListener() {
+        //binding.selectTimebtn.setOnClickListener(new View.OnClickListener() {
+        selectTimebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -44,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        binding.setAlarmbtn.setOnClickListener(new View.OnClickListener() {
+        setAlarmbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -52,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        binding.cancelAlarmBtn.setOnClickListener(new View.OnClickListener() {
+        cancelAlarmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -100,11 +110,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(picker.getHour()>12)
-                    binding.selectedTime.setText(
+                    selectedTime.setText(
                             String.format("%02d",(picker.getHour()-12))+" : "+String.format("%02d",picker.getMinute())+" PM "
                     );
                 else{
-                    binding.selectedTime.setText(picker.getHour()+" : "+picker.getMinute()+" AM ");
+                   selectedTime.setText(picker.getHour()+" : "+picker.getMinute()+" AM ");
                 }
                 calendar=Calendar.getInstance();
                 calendar.set(Calendar.HOUR_OF_DAY,picker.getHour());
